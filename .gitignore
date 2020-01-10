@@ -1,4 +1,6 @@
 .debug.json
+.DS_Store
+.xdignore
 node_modules/
 package-lock.json
 yarn.lock
