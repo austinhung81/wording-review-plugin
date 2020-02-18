@@ -39,3 +39,24 @@ footer {
 form a:hover {
     color: red;
 }
+
+.marker-container {
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mark-label {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 80px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mark-type {
+    flex: 0 0 32px;
+}
+

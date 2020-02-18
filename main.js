@@ -99,7 +99,26 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "form {\n    display: flex;\n    flex-direction: column;\n    flex: 1 1 auto;\n}\n\nh1 {\n    display: flex;\n    justify-content: space-between;\n    flex: 0 0 auto;\n}\n\nh1 button {\n    margin: 0;\n    padding: 0;\n}\n\nfooter {\n    flex: 0 0 auto;\n    align-items: center;\n}\n\n.nogrow {\n    flex: 0 0 auto;\n}\n\n.noshrink {\n    flex: 0 0 auto;\n}\n\n.row {\n    align-items: center;\n}\n\n.row label span {\n    font-size: 100%;\n}\n\nform a:hover {\n    color: red;\n}\n", ""]);
+exports.push([module.i, "form {\n    display: flex;\n    flex-direction: column;\n    flex: 1 1 auto;\n}\n\nh1 {\n    display: flex;\n    justify-content: space-between;\n    flex: 0 0 auto;\n}\n\nh1 button {\n    margin: 0;\n    padding: 0;\n}\n\nfooter {\n    flex: 0 0 auto;\n    align-items: center;\n}\n\n.nogrow {\n    flex: 0 0 auto;\n}\n\n.noshrink {\n    flex: 0 0 auto;\n}\n\n.row {\n    align-items: center;\n}\n\n.row label span {\n    font-size: 100%;\n}\n\nform a:hover {\n    color: red;\n}\n\n.marker-container {\n    flex-wrap: nowrap;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n}\n\n.mark-label {\n    display: inline-block;\n    flex: 0 0 auto;\n    width: 80px;\n    overflow: hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n}\n\n.mark-type {\n    flex: 0 0 32px;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./src/components/ContentParser.css":
+/*!********************************************************************!*\
+  !*** ./node_modules/css-loader!./src/components/ContentParser.css ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".content-parser-container {\n    border-top: 1px solid #cccccc;\n}", ""]);
 
 // exports
 
@@ -141,6 +160,27 @@ exports.push([module.i, "", ""]);
 
 // exports
 
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./src/components/Wording.css":
+/*!**************************************************************!*\
+  !*** ./node_modules/css-loader!./src/components/Wording.css ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".qhcLwZ45Uvum4Xu0ahw1y {\n    display: inline-block;\n    letter-spacing: 1px;\n    color: #B8B8B8;\n    font-size: 16px;\n    margin: 0 0 8px 0;\n    width: 300px;\n    overflow: hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n}", ""]);
+
+// exports
+exports.locals = {
+	"wording": "qhcLwZ45Uvum4Xu0ahw1y"
+};
 
 /***/ }),
 
@@ -32644,14 +32684,16 @@ function bytesToUuid(buf, offset) {
   var i = offset || 0;
   var bth = byteToHex;
   // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
+  return ([
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]]
+  ]).join('');
 }
 
 module.exports = bytesToUuid;
@@ -32787,94 +32829,178 @@ const uuidv4 = __webpack_require__(/*! uuid/v4 */ "./node_modules/uuid/v4.js");
 const styles = __webpack_require__(/*! ./App.css */ "./src/App.css");
 
 const Marker = __webpack_require__(/*! ./components/Marker */ "./src/components/Marker.jsx");
+const ContentParser = __webpack_require__(/*! ./components/ContentParser */ "./src/components/ContentParser.jsx");
 const Warning = __webpack_require__(/*! ./components/Warning */ "./src/components/Warning.jsx");
+const Wording = __webpack_require__(/*! ./components/Wording */ "./src/components/Wording.jsx");
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state = {
-            markFor: '0',
-            selectedText: false,
-            selectTextConetent: ''
-        };
+		this.state = {
+			markFor: '0',
+			isSelectedText: false,
+			selectTextConetent: ''
+		};
 
-        this.panel = React.createRef();
-        this.documentStateChanged = this.documentStateChanged.bind(this);
-        this.handleMarkerChanged = this.handleMarkerChanged.bind(this);
-    }
+		this.panel = React.createRef();
+		this.documentStateChanged = this.documentStateChanged.bind(this);
+		this.handleMarkerChanged = this.handleMarkerChanged.bind(this);
+	}
 
-    documentStateChanged(selection) {
-        const { Text } = __webpack_require__(/*! scenegraph */ "scenegraph");
-        if (!selection || !(selection.items[0] instanceof Text)) {
-            this.setState({
-                selectedText: false
-            });
-        } else {
-            this.setState({
-                selectedText: true,
-                markFor: '0'
-            });
-        }
-    }
+	documentStateChanged(selection) {
+		const { Text } = __webpack_require__(/*! scenegraph */ "scenegraph");
+		if (!selection || !(selection.items[0] instanceof Text)) {
+			this.setState({
+				isSelectedText: false,
+				selectTextConetent: ''
+			});
+		} else {
+			this.setState({
+				isSelectedText: true,
+				markFor: '0',
+				selectTextConetent: selection.items[0].text
+			});
+		}
+	}
 
-    handleMarkerChanged(value) {
-        this.setState({
-            markFor: value
-        }, () => {
-            if (this.state.markFor === '0') {
-                const { editDocument } = __webpack_require__(/*! application */ "application");
-                const { selection, root } = __webpack_require__(/*! scenegraph */ "scenegraph");
-                const id = uuidv4();
+	handleMarkerChanged(value) {
+		const { editDocument } = __webpack_require__(/*! application */ "application");
+		const { selection, root } = __webpack_require__(/*! scenegraph */ "scenegraph");
+		const id = uuidv4();
+		editDocument({ editLabel: "Mark wording text" }, () => {
+			selection.items[0].pluginData = {};
+		});
+		this.setState({
+			markFor: value,
+			selectTextConetent: selection.items[0].text
+		}, () => {
+			if (this.state.markFor === '0') {}
+			if (this.state.markFor === '1') {}
+		});
+	}
 
-                editDocument({ editLabel: "Mark wording text" }, () => {
-                    if (!root.pluginData) {
-                        root.pluginData = {
-                            root: 'root'
-                        };
-                    }
-                    if (!selection.items[0].pluginData) {
-                        selection.items[0].pluginData = {
-                            id: id,
-                            wording: [{ text: selection.items[0].text, type: 'wording' }]
-                        };
-                    }
-                    console.log(root.pluginData);
-                    console.log(selection.items[0].pluginData);
-                });
-            }
-            if (this.state.markFor === '1') {
-                const { selection } = __webpack_require__(/*! scenegraph */ "scenegraph");
-                this.setState({
-                    selectTextConetent: selection.items[0].text
-                });
-            }
-        });
-    }
-
-    render() {
-        const { selection } = this.props;
-        const { selectedText, markFor } = this.state;
-        const MarkerPanel = () => React.createElement(
-            'div',
-            null,
-            React.createElement(Marker, { value: markFor, text: selectTextConetent, passValue: this.handleMarkerChanged })
-        );
-        let panel;
-        if (!selectedText) {
-            panel = React.createElement(Warning, null);
-        } else {
-            panel = React.createElement(MarkerPanel, null);
-        }
-        return React.createElement(
-            'panel',
-            { className: styles.panel },
-            panel
-        );
-    }
+	render() {
+		const { selection } = this.props;
+		const { isSelectedText, markFor, selectTextConetent } = this.state;
+		const MarkerPanel = () => React.createElement(
+			'div',
+			null,
+			React.createElement(Wording, { text: selectTextConetent }),
+			React.createElement(Marker, { value: markFor, passValue: this.handleMarkerChanged }),
+			markFor === '1' && React.createElement(ContentParser, { text: selectTextConetent })
+		);
+		const panel = !isSelectedText ? React.createElement(Warning, null) : React.createElement(MarkerPanel, null);
+		return React.createElement(
+			'panel',
+			{ className: styles.panel },
+			panel
+		);
+	}
 }
 
 module.exports = App;
+
+/***/ }),
+
+/***/ "./src/components/ContentParser.css":
+/*!******************************************!*\
+  !*** ./src/components/ContentParser.css ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../node_modules/css-loader!./ContentParser.css */ "./node_modules/css-loader/index.js!./src/components/ContentParser.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./src/components/ContentParser.jsx":
+/*!******************************************!*\
+  !*** ./src/components/ContentParser.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const styles = __webpack_require__(/*! ./ContentParser.css */ "./src/components/ContentParser.css");
+const type = ['wording', 'parameter', 'count', 'date'];
+
+class ContentParser extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	wordsElement(words) {
+		return React.createElement(
+			"div",
+			null,
+			words.map((value, index) => {
+				return React.createElement(
+					"div",
+					{ key: index },
+					value
+				);
+			})
+		);
+	}
+
+	render() {
+		const { text } = this.props;
+		const words = text.split(' ');
+		const panel = text.length > 0 ? React.createElement(
+			"div",
+			{ className: "content-parser-container" },
+			words.map((value, index) => {
+				return React.createElement(
+					"div",
+					{ className: "marker-container", key: index },
+					React.createElement(
+						"span",
+						{ className: "mark-label" },
+						value
+					),
+					React.createElement(
+						"select",
+						{ className: "mark-type", onChange: this.handleChange },
+						type.map((value, index) => {
+							return React.createElement(
+								"option",
+								{ value: value, key: index },
+								value
+							);
+						})
+					)
+				);
+			})
+		) : '';
+		return React.createElement(
+			"div",
+			null,
+			panel
+		);
+	}
+}
+
+module.exports = ContentParser;
 
 /***/ }),
 
@@ -32919,42 +33045,42 @@ const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const styles = __webpack_require__(/*! ./Marker.css */ "./src/components/Marker.css");
 
 class Marker extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-    }
+	constructor(props) {
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
 
-    componentDidMount() {}
+	componentDidMount() {}
 
-    update() {}
-    handleChange(event) {
-        this.props.passValue(event.target.value);
-    }
-    render() {
-        return React.createElement(
-            "div",
-            null,
-            React.createElement(
-                "span",
-                null,
-                "Mark for"
-            ),
-            React.createElement(
-                "select",
-                { className: "mark-type", onChange: this.handleChange, value: this.props.value },
-                React.createElement(
-                    "option",
-                    { value: "0" },
-                    "Wording"
-                ),
-                React.createElement(
-                    "option",
-                    { value: "1" },
-                    "Wording with parms"
-                )
-            )
-        );
-    }
+	update() {}
+	handleChange(event) {
+		this.props.passValue(event.target.value);
+	}
+	render() {
+		return React.createElement(
+			"div",
+			{ className: "marker-container" },
+			React.createElement(
+				"span",
+				{ className: "mark-label" },
+				"Mark for"
+			),
+			React.createElement(
+				"select",
+				{ className: "mark-type", onChange: this.handleChange, value: this.props.value },
+				React.createElement(
+					"option",
+					{ value: "0" },
+					"Wording"
+				),
+				React.createElement(
+					"option",
+					{ value: "1" },
+					"Wording with parms"
+				)
+			)
+		);
+	}
 }
 
 module.exports = Marker;
@@ -33012,6 +33138,57 @@ module.exports = Warning;
 
 /***/ }),
 
+/***/ "./src/components/Wording.css":
+/*!************************************!*\
+  !*** ./src/components/Wording.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../node_modules/css-loader!./Wording.css */ "./node_modules/css-loader/index.js!./src/components/Wording.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./src/components/Wording.jsx":
+/*!************************************!*\
+  !*** ./src/components/Wording.jsx ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const styles = __webpack_require__(/*! ./Wording.css */ "./src/components/Wording.css");
+
+const Wording = props => React.createElement(
+    "h3",
+    { className: styles.wording },
+    `Wording: ${props.text}`
+);
+
+module.exports = Wording;
+
+/***/ }),
+
 /***/ "./src/controllers/PanelController.js":
 /*!********************************************!*\
   !*** ./src/controllers/PanelController.js ***!
@@ -33028,12 +33205,12 @@ class PanelController {
     constructor(App) {
         this.App = App;
         this.instance = null;
-        this.rootNode = document.createElement("div");
-        this.rootNode.className = `root ${os.platform() === "darwin" ? "mac" : "win"}`;
-        //this.rootNode.style.margin="-8px";
+        this.rootNode = document.createElement('div');
+        this.rootNode.className = `root ${os.platform() === 'darwin' ? 'mac' : 'win'}`;
+        //this.rootNode.style.margin='-8px';
         this.attachment = null;
 
-        ["show", "hide", "update"].forEach(fn => this[fn] = this[fn].bind(this));
+        ['show', 'hide', 'update'].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
     show(event) {

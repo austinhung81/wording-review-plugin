@@ -1,18 +1,18 @@
-const React = require("react");
-const ReactDOM = require("react-dom");
-const { selection } = require("scenegraph");
-const os = require("os");
+const React = require('react');
+const ReactDOM = require('react-dom');
+const { selection } = require('scenegraph');
+const os = require('os');
 
 class PanelController {
     constructor(App) {
         this.App = App;
         this.instance = null;
-        this.rootNode = document.createElement("div");
-        this.rootNode.className = `root ${os.platform() === "darwin" ? "mac" : "win"}`;
-        //this.rootNode.style.margin="-8px";
+        this.rootNode = document.createElement('div');
+        this.rootNode.className = `root ${os.platform() === 'darwin' ? 'mac' : 'win'}`;
+        //this.rootNode.style.margin='-8px';
         this.attachment = null;
 
-        ["show", "hide", "update"].forEach(fn => this[fn] = this[fn].bind(this));
+        ['show', 'hide', 'update'].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
     show(event) {
